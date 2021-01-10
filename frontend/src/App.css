@@ -1,0 +1,10 @@
+.login-container section {
+  scroll-snap-align: start;
+}
+.login-container{
+  height: 100vh;
+  scroll-behavior: smooth;
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+  z-index: -1
+}
