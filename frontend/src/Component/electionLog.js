@@ -4,13 +4,14 @@ import Logo from '../img/raise-hand.png';
 import voter from '../img/vote (1).png';
 import check from '../img/check.png';
 import add from '../img/plus.png';
+import del from '../img/delete.png'
 
 class ElectionLog extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             name: '',
-            description: '',
+            description: 'test',
             party: '',
             Chairman: [],
             Secretary: [],
@@ -24,6 +25,7 @@ class ElectionLog extends React.Component {
         console.log("Mound")
         await this.candidates();
     }
+
 
     candidates = async () => {
         await this.chairmanList('Chairman');
@@ -70,7 +72,7 @@ class ElectionLog extends React.Component {
             } catch (e) {
                 alert(e.message)
             }
-            this.setState({name: '', description: '', party: ''});
+            this.setState({name: '', description: 'test', party: ''});
         }else{
             alert("empty input tag")
         }
@@ -107,6 +109,25 @@ class ElectionLog extends React.Component {
             alert(e.message)
         }
     }
+    deleteHandle = (name, party) =>{
+        try{
+            fetch("http://localhost/Voteing/backend/deleteCandidate", {
+                method: "POST",
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    party:party,
+                }),
+            }).then((res) => res.json())
+            .then((data) => console.log("del :"+JSON.stringify(data)))
+            .then(() => this.props.history.push("/"))
+        } catch(e){
+            alert(e.message);
+        }
+    }
 
     render() {
         console.log("render data :" + JSON.stringify(this.state.Member))
@@ -139,7 +160,7 @@ class ElectionLog extends React.Component {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-                <div className="bg-primary w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh' }}>
+                <div className=" w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh',backgroundColor:'#05c555' }}>
                     {/* <div style={{ height: '20vh', width: '20vh' }}>
                         <img className="p-3" style={{ height: '100%', width: '100%' }} alt="" src={Logo} />
                     </div> */}
@@ -152,30 +173,28 @@ class ElectionLog extends React.Component {
                 <div className="d-flex justify-content-between align-items-center border" style={{ height: '10vh', width: '100vw' }}>
                     <div type="button" className="font-weight-light pl-4" onClick={this.backButton}>back</div>
                     <div className="font-weight-bold">{this.props.location.collage}</div>
-                    <div type="button" className="font-weight-light pr-4">
-                        <DropdownButton id="dropdown-basic-button" title="More">
-                            <Dropdown.Item href="/settings">Settings</Dropdown.Item>
-                            <Dropdown.Item onClick={this.logoutHandle}>Log Out</Dropdown.Item>
-                        </DropdownButton>
-                    </div>
+                    <div type="button" className="font-weight-light pr-4" onClick={this.logoutHandle}>LOGOUT</div>
                 </div>
                 <div className="d-flex flex-row align-items-center justify-content-center" style={{ height: '65vh', width: '100vw' }}>
-                    <div className="col-10 d-flex flex-row justify-content-start align-items-center" style={{ height: '65vh' }}>
+                    <div className="col-10 d-flex flex-row justify-content-center align-items-center" style={{ height: '65vh' }}>
                         <div className="m-1 rounded-lg d-flex flex-column" style={{ width:240 ,height: '60vh', backgroundColor: 'white' }}>
                             <Form.Label className="font-weight-bold">Chairman</Form.Label>
                             {
                                 this.state.Chairman.map((value, index) => {
                                     return (
-                                        <div className="p-0" key="index">
-                                            <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
-                                                <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '2em' }}>{value.party} : {value.vote}</span>
+                                        <div  className="p-0" key="index">
+                                            <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == 'ksu' ? '#99bbff' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
+                                                <div className="d-flex flex-row align-items-center">
+                                                    <img type="button"  onClick={() => this.deleteHandle(value.name, value.party)} style={{ height: '20px', width: '20px' }} alt="" src={del} />
+                                                    <span className="text-uppercase pl-3" style={{ color: 'black', fontWeight: 'bold', fontSize: '1em' }}>{value.name} : {value.vote}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     )
                                 })
                             }
                             <div className="p-0">
-                                <div className="d-flex justify-content-center align-items-center container-fluid" type="button" onClick={() => this.addElection('Chairman')} style={{ width: 240, height: 80, backgroundColor: '#99caff' }}>
+                                <div className="d-flex justify-content-center align-items-center container-fluid" type="button" onClick={() => this.addElection('Chairman')} style={{ width: 240, height: 80, backgroundColor: '#b4fdd3' }}>
                                     <img style={{ height: '20px', width: '20px' }} alt="" src={add} />
                                 </div>
                             </div>
@@ -186,16 +205,19 @@ class ElectionLog extends React.Component {
                             {
                                 this.state.Secretary.map((value, index) => {
                                     return (
-                                        <div className="p-0">
-                                            <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
-                                                <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '2em' }}>{value.party} : {value.vote}</span>
+                                        <div  className="p-0" key="index">
+                                            <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == 'ksu' ? '#99bbff' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
+                                                <div className="d-flex flex-row align-items-center">
+                                                    <img type="button"  onClick={() => this.deleteHandle(value.name, value.party)} style={{ height: '20px', width: '20px' }} alt="" src={del} />
+                                                    <span className="text-uppercase pl-3" style={{ color: 'black', fontWeight: 'bold', fontSize: '1em' }}>{value.name} : {value.vote}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     )
                                 })
                             }
                             <div className="p-0">
-                                <div className="d-flex justify-content-center align-items-center container-fluid" type="button" onClick={() => this.addElection('Secretary')} style={{ width: 240, height: 80, backgroundColor: '#99caff' }}>
+                                <div className="d-flex justify-content-center align-items-center container-fluid" type="button" onClick={() => this.addElection('Secretary')} style={{ width: 240, height: 80, backgroundColor: '#b4fdd3' }}>
                                     <img style={{ height: '20px', width: '20px' }} alt="" src={add} />
                                 </div>
                             </div>
@@ -206,16 +228,19 @@ class ElectionLog extends React.Component {
                             {
                                 this.state.Treasury.map((value, index) => {
                                     return (
-                                        <div className="p-0">
-                                            <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
-                                                <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '2em' }}>{value.party} : {value.vote}</span>
+                                        <div  className="p-0" key="index">
+                                            <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == 'ksu' ? '#99bbff' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
+                                                <div className="d-flex flex-row align-items-center">
+                                                    <img type="button"  onClick={() => this.deleteHandle(value.name, value.party)} style={{ height: '20px', width: '20px' }} alt="" src={del} />
+                                                    <span className="text-uppercase pl-3" style={{ color: 'black', fontWeight: 'bold', fontSize: '1em' }}>{value.name} : {value.vote}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     )
                                 })
                             }
                             <div className="p-0">
-                                <div className="d-flex justify-content-center align-items-center container-fluid" type="button" onClick={() => this.addElection('Treasury')} style={{ width: 240, height: 80, backgroundColor: '#99caff' }}>
+                                <div className="d-flex justify-content-center align-items-center container-fluid" type="button" onClick={() => this.addElection('Treasury')} style={{ width: 240, height: 80, backgroundColor: '#b4fdd3' }}>
                                     <img style={{ height: '20px', width: '20px' }} alt="" src={add} />
                                 </div>
                             </div>
@@ -226,16 +251,19 @@ class ElectionLog extends React.Component {
                             {
                                 this.state.Member.map((value, index) => {
                                     return (
-                                        <div className="p-0">
-                                            <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
-                                                <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '2em' }}>{value.party} : {value.vote}</span>
+                                        <div  className="p-0" key="index">
+                                            <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == 'ksu' ? '#99bbff' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
+                                                <div className="d-flex flex-row align-items-center">
+                                                    <img type="button"  onClick={() => this.deleteHandle(value.name, value.party)} style={{ height: '20px', width: '20px' }} alt="" src={del} />
+                                                    <span className="text-uppercase pl-3" style={{ color: 'black', fontWeight: 'bold', fontSize: '1em' }}>{value.name} : {value.vote}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     )
                                 })
                             }
                             <div className="p-0">
-                                <div className="d-flex justify-content-center align-items-center container-fluid" type="button" onClick={() => this.addElection('Member')} style={{ width: 240, height: 80, backgroundColor: '#99caff' }}>
+                                <div className="d-flex justify-content-center align-items-center container-fluid" type="button" onClick={() => this.addElection('Member')} style={{ width: 240, height: 80, backgroundColor: '#b4fdd3' }}>
                                     <img style={{ height: '20px', width: '20px' }} alt="" src={add} />
                                 </div>
                             </div>

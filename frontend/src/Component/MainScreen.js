@@ -38,10 +38,10 @@ loginFunction = () =>{
     render(){
         return(
             <div className="p-0 m-0 position-relative" style={{ width: '100vw' }}>
-      <div className="position-absolute d-flex flex-column justify-content-center align-items-center" style={{ height: '75vh', width: '30vw', zIndex: 1, marginLeft: '60%',marginTop: '8%', borderRadius: '2%', backgroundColor: 'aliceblue' }}>
+      <div className="position-absolute d-flex flex-column justify-content-center align-items-center" style={{ height: '75vh', width: '30vw', zIndex: 1, marginLeft: '60%',marginTop: '8%', borderRadius: '2%', backgroundColor: 'white' }}>
         <div className="d-flex flex-column mb-4">
-          <span className="text-capitalize" style={{ fontSize: '2em', fontWeight: 'bold', }}>sign up</span>
-          <small className="font-weight-bold">for a Voter account</small>
+          <span className="text-capitalize" style={{ fontSize: '2em', fontWeight: 'bold', color:'#05c555'}}>ELECTS</span>
+          <small className="font-weight-bold">VOTER LOGIN</small>
         </div>
         <Form autoComplete="off" className="d-flex justify-content-center align-items-center flex-column">
           <Form.Group controlId="formBasicEmail">
@@ -55,17 +55,17 @@ loginFunction = () =>{
             <Form.Label>Password</Form.Label>
             <Form.Control  className="mb-4" style={{width:'270px'}} value={this.state.password} onChange={e => this.setState({ password: e.target.value })} type="password" placeholder="Password" />
           </Form.Group>
-          <Button variant="primary" onClick={() =>this.HandleLogin()}>login</Button>
+          <Button ariant="success" style={{backgroundColor:'#05c555',width:270,fontWeight:'bold'}} onClick={() =>this.HandleLogin()}>LOGIN</Button>
           <div className="mt-4" type="button">
-            <Nav.Link as={NavLink} style={{fontSize:'0.8em',fontWeight:'lighter'}} to="/VoterS">Create New Accound</Nav.Link>
+            <Nav.Link as={NavLink} style={{fontSize:'0.8em',fontWeight:'lighter'}} to="/VoterS">CREATE NEW ACCOUNT</Nav.Link>
           </div>
         </Form>
       </div>
 
 
-      <div className="login-container container-fluid p-0 m-0 position-absolute w-100" style={{ height: '100vh', scrollBehavior: 'smooth', overflow: 'auto' }}>
-        <section className="h-100 bg-primary  p-0">
-            <Navbar collapseOnSelect expand="lg"  variant="dark">
+      <div className="login-container container-fluid p-0 m-0 position-absolute w-100" style={{ height: '100vh', scrollBehavior: 'smooth', overflow: 'auto',backgroundColor:'#f6f6f6'}}>
+        <section className="h-100  p-0">
+            <Navbar collapseOnSelect expand="lg" style={{backgroundColor:'#05c555'}}  variant="dark">
               <Navbar.Brand className="font-weight-bold pr-5 " style={{fontSize:'2em'}}>ELECTS</Navbar.Brand>
               <Navbar.Toggle aria-controls="responsive-navbar-nav" />
               <Navbar.Collapse id="responsive-navbar-nav">
@@ -76,10 +76,10 @@ loginFunction = () =>{
               </Navbar.Collapse>
             </Navbar>
           <div className="h-100 w-100 d-flex justify-content-start align-items-center pl-4">
-            <div className="pb-4">
-              <h1 className="pb-3 font-weight-bold" style={{fontSize:'3em',color:'white'}}>Online Voting System</h1>
-              <h4 style={{color:'white'}}>The most popular voting website for</h4>
-              <h4 style={{color:'white'}}>creating polls & scheduling</h4>
+            <div className="pb-4 ml-4">
+              <h1 className="pb-3 font-weight-bold" style={{fontSize:'3em',color:'black'}}>Online Voting System</h1>
+              <h4 style={{color:'#8c8c8c'}}>The most popular voting website for</h4>
+              <h4 style={{color:'#8c8c8c'}}>creating polls & scheduling</h4>
             </div>
           </div>
         </section>

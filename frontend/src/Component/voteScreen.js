@@ -127,7 +127,7 @@ class VoterScreen extends React.Component {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-                <div className="bg-primary w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh' }}>
+                <div className="w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh',backgroundColor:'#05c555' }}>
                     {/* <div style={{ height: '20vh', width: '20vh' }}>
                         <img className="p-3" style={{ height: '100%', width: '100%' }} alt="" src={Logo} />
                     </div> */}

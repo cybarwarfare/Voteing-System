@@ -1,9 +1,8 @@
 import React from 'react';
+import '../App.css';
 import { Button, Modal, DropdownButton, Dropdown, Form } from 'react-bootstrap';
-import Logo from '../img/raise-hand.png'
-import add from '../img/plus.png';
-import icon1 from '../img/glen-carrie-wzKHNVTZmZo-unsplash (1).jpg';
 import icon2 from '../img/arnaud-jaegers-IBWJsMObnnU-unsplash.jpg';
+import admin from '../img/unauthorized-person.png';
 
 
 class HomeScreen extends React.PureComponent{
@@ -18,6 +17,7 @@ class HomeScreen extends React.PureComponent{
             test: 4,
         }
     }
+
     async componentDidMount() {
         if (window.localStorage.getItem('admin') != null) {
             await this.fetchFunction();
@@ -25,11 +25,12 @@ class HomeScreen extends React.PureComponent{
             console.log("login")
         }
     }
-    async componentDidUpdate(){
-        await this.fetchList();
-    }
+    // async componentDidUpdate(){
+    //     if(this.state.boothList == null){
+    //         await this.fetchList();
+    //     }
+    // }
     fetchList = () => {
-        let list = [];
         fetch("http://localhost/Voteing/backend/ListElection", {
             method: "POST",
                 headers: {
@@ -41,10 +42,13 @@ class HomeScreen extends React.PureComponent{
                 }),
         })
             .then((response) => response.json())
-            .then((data) => data.forEach(value => {
-                list.push(value);
-            }))
-            .then(() => this.setState({ boothList: list }))
+            .then((data) => this.setState({ boothList: data }))
+            .then(() => console.log(this.state.boothList[0]))
+            .then(() => {
+                if(this.state.boothList[0] != undefined){
+                    this.setState({electionname: this.state.boothList[0].electionname})
+                }
+            });
     }
     fetchFunction = () => {
         try {
@@ -59,30 +63,34 @@ class HomeScreen extends React.PureComponent{
                     email: window.localStorage.getItem('admin'),
                 }),
             }).then((res) => res.json())
-                .then((data) => this.setState({ boothName: data[0], collage: data[3] }, console.log("data :" + data[3])));
+                .then((data) => this.setState({ boothName: data[0], collage: data[3] }, console.log("data :" + JSON.stringify(data))))
+                .then(() => this.fetchList());
         } catch (e) {
             alert(e.message)
         }
     }
     CreateElection = () => {
-        try {
-            console.log("data fetching")
-            fetch("http://localhost/Voteing/backend/election", {
-                method: "POST",
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    electionname: this.state.electionname,
-                    boothname: this.state.boothName,
-                    date: '12/10/2020'
-                }),
-            }).then((res) => res.json())
-                .then((data) => console.log(data.reason))
-                .then(() => this.setState({showModal: false}))
-        } catch (e) {
-            alert(e.message)
+        if(this.state.electionname != ''){
+            try {
+                console.log("data fetching")
+                fetch("http://localhost/Voteing/backend/election", {
+                    method: "POST",
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        electionname: this.state.electionname,
+                        boothname: this.state.boothName,
+                        date: '12/10/2020'
+                    }),
+                }).then((res) => res.json())
+                    .then((data) => console.log(data.reason))
+                    .then(() => this.setState({showModal: false}))
+                    .then(() => window.location.reload());
+            } catch (e) {
+                alert(e.message)
+            }
         }
     }
     handleClick = e => {
@@ -117,8 +125,9 @@ class HomeScreen extends React.PureComponent{
                     electionname: this.state.electionname,
                     boothname: this.state.boothName,
                 }),
-            }).then((res) => res.json())
-            .then((data) => console.log("del :"+data));
+            }).then((res) => res.json());
+            // .then((data) => console.log("del :"+data))
+            window.location.reload();
         } catch(e){
             alert(e.message)
         }
@@ -146,54 +155,61 @@ class HomeScreen extends React.PureComponent{
                     </Button>
                     </Modal.Footer>
                 </Modal>
-                <div className="bg-primary w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh' }}>
+                <div className="w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh',backgroundColor:'#05c555' }}>
                     {/* <div style={{ height: '20vh', width: '20vh' }}>
                         <img className="p-3" style={{ height: '100%', width: '100%' }} alt="" src={Logo} />
                     </div> */}
                     <div className="d-flex flex-column justify-content-center align-items-center">
-                        <span style={{ fontSize: '2em', color: 'white' }} className="font-weight-bold">ELECTS</span>
+                        <span style={{ fontSize: '3em', color: 'white' }} className="font-weight-bold">ELECTS</span>
                         <span style={{ color: 'white',fontSize:'1.5em'}} className="font-smaller">The most popular voting website for creating polls & scheduling</span>
                         {/* <span style={{ color: 'white' }} className="font-smaller">creating polls & scheduling</span> */}
                     </div>
                 </div>
-                <div className="d-flex justify-content-between align-items-center border" style={{ height: '10vh', width: '100vw' }}>
-                    <div className="font-weight-light pl-4"></div>
-                    <div className="font-weight-bold text-capitalize">{this.state.collage}</div>
-                    <div type="button" className="font-weight-light pr-4">
-                        <DropdownButton id="dropdown-basic-button" title="More">
-                        <Dropdown.Item onClick={this.handleElection}>Drop</Dropdown.Item>
-                            <Dropdown.Item href="/settings">Settings</Dropdown.Item>
-                            <Dropdown.Item onClick={this.logoutHandle}>Log Out</Dropdown.Item>
-                        </DropdownButton>
+
+                <div className="d-flex flex-row justify-content-center align-items-center" style={{ height: '75vh', width: '100vw' }}>
+                    <div className="col-3 d-flex flex-column justify-content-center align-items-center h-100 border">
+                        <span className="mb-4" style={{fontWeight:'bold',fontSize:20}}>Profile</span>
+                        <div className="d-flex justify-content-center align-items-center" style={{height:100,width:100,borderRadius:100/2}}>
+                            <img style={{ height: '100%', width: '100%'}} alt="" src={admin} />
+                        </div>
+                        <div className="d-flex flex-column p-3 align-items-center">
+                            <span className="p-1 font-weight-bolder">{window.localStorage.getItem('admin')}</span>
+                            <span className="p-1">{this.state.boothName}</span>
+                            <span className="p-1">{this.state.collage}</span>
+                        </div>
                     </div>
-                </div>
-                <div className="p-4 d-flex flex-row justify-content-center align-items-center" style={{ height: '65vh', width: '100vw' }}>
+                    <div className="col-9 h-100 d-flex justify-content-center align-items-center">
                     {
                         this.state.boothList == '' ? (
-                            <div className="m-2 d-flex flex-column border" style={{ height: '50vh', width: '90vw', borderRadius: 8 }}>
-                        <div className="d-flex justify-content-center align-items-center" style={{ width: '100%', height: '60%' }}>
-                            <img style={{ height: '100%', width: '100%' }} alt="" src={icon1} />
-                        </div>
-                        <div type="button" onClick={this.addElection} className="d-flex justify-content-center align-items-center" style={{ width: '100%', height: '40%' }}>
-                            <img className="p-3" style={{ height: '90px', width: '90px' }} alt="" src={add} />
+                            <div className="m-2 d-flex flex-column bg-primary" style={{ height: '50vh', width: '90%', borderRadius: 8 }}>
+                        <div className="d-flex justify-content-center align-items-center" style={{ width: '100%', height: '100%' }}>
+                            {/* <img id="img1" style={{ height: '100%', width: '100%' }} alt="" src={icon1} /> */}
+                            <div type="button" onClick={this.addElection} className="position-absolute d-flex">
+                                <span style={{fontSize:90,fontWeight:'bold',color:'white',textTransform:'uppercase'}}>create elect</span>
+                            </div>
                         </div>
                     </div>
                         ):(
                             this.state.boothList.map((value, index) => {
                                 return (
-                                    <div  type="button" className="m-2 d-flex flex-column border"  style={{ height: '50vh', width: '90vw', borderRadius: 5}} onClick={()=>this.handleClick(value.electionname)} key='index'>
-                                        <div className="d-flex justify-content-center align-items-center" style={{ width: '100%', height: '70%' }}>
-                                            <img style={{ height: '100%', width: '100%' }} src={icon2} /> 
+                                    <div className="m-2 d-flex flex-column justify-content-center align-items-center"  style={{ height: '50vh', width: '90%', borderRadius: 5}}  key='index'>
+                                        <div type="button" className="d-flex justify-content-center align-items-center" style={{ width: '100%', height: '90%' }} onClick={()=>this.handleClick(value.electionname)}>
+                                            <img id="img1" style={{ height: '100%', width: '100%'}} src={icon2} />
+                                            <span className="text-uppercase font-weight-bold position-absolute" style={{fontSize:80,color:'white'}}>{value.electionname}</span>
                                         </div>
-                                        <div className="d-flex justify-content-around align-items-center flex-column p-4" style={{ width: '100%', height: '30%' }}>
-                                            <span className="text-uppercase font-weight-bold" style={{fontSize:40}}>{value.electionname}</span>
+                                        <div className="d-flex flex-row justify-content-lg-between">
+                                            <div type="button" onClick={this.handleElection} className="mt-3 p-4 d-flex justify-content-center align-items-center rounded-lg" style={{backgroundColor:'#05c555'}}>
+                                                <span className="font-weight-bolder" style={{color:'white'}}>Delete Current Elects</span>
+                                            </div>
+                                            <div type="button" onClick={() => this.logoutHandle()} className="mt-3 p-4 d-flex justify-content-center align-items-center rounded-lg" >
+                                                <span className="font-weight-bolder" style={{color:'#05c555'}}>logout</span>
+                                            </div>
                                         </div>
                                     </div>
                                 )
                             })
                         )
                     }
-                    <div>
                     </div>
                 </div>
             </div>

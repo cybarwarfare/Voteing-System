@@ -1,8 +1,7 @@
 import React from 'react';
-import '../App.css'
 import { Button, Modal, DropdownButton, Dropdown, Form } from 'react-bootstrap';
 import Logo from '../img/raise-hand.png'
-import admin from '../img/profile.png';
+import add from '../img/plus.png';
 import icon1 from '../img/close.png';
 import icon2 from '../img/arnaud-jaegers-IBWJsMObnnU-unsplash.jpg';
 
@@ -150,7 +149,7 @@ class VoterHome extends React.Component {
                     </Button>
                     </Modal.Footer>
                 </Modal>
-                <div className="w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh',backgroundColor:'#05c555' }}>
+                <div className="bg-primary w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh' }}>
                     {/* <div style={{ height: '20vh', width: '20vh' }}>
                         <img className="p-3" style={{ height: '100%', width: '100%' }} alt="" src={Logo} />
                     </div> */}
@@ -166,30 +165,19 @@ class VoterHome extends React.Component {
                     <div TYPE="button" onClick={this.logoutHandle} className="font-weight-bold text-capitalize pr-3">LOGOUT</div>
                 </div>
                 <div className="p-4 d-flex flex-row" style={{ height: '65vh', width: '100vw' }}>
-                <div className="col-3 d-flex flex-column justify-content-center align-items-center h-100 border">
-                        <span className="mb-4" style={{fontWeight:'bold',fontSize:20}}>Profile</span>
-                        <div className="d-flex justify-content-center align-items-center" style={{height:100,width:100,borderRadius:100/2}}>
-                            <img style={{ height: '100%', width: '100%'}} alt="" src={admin} />
-                        </div>
-                        <div className="d-flex flex-column p-3 align-items-center">
-                            <span className="p-1 font-weight-bolder">{window.localStorage.getItem('voter')}</span>
-                            <span className="p-1">{this.state.collage}</span>
-                        </div>
-                    </div>
-                    <div className="col-9">
                     {
                         this.state.boothList.map((value, index) => {
                             return (
-                                <div key={index}  className="m-2 d-flex flex-column"  style={{ height: '56vh', width: '100%', borderRadius: 5,position:'relative' }}>
+                                <div key={index}  className="m-2 d-flex flex-column"  style={{ height: '50vh', width: '90vw', borderRadius: 5,position:'relative' }}>
                                     <div className="d-flex justify-content-center align-items-center" style={{ width: '100%', height: '70%' }}>
-                                        <img id="img1" style={{ height: '100%', width: '100%' }} src={icon2} /> 
+                                        <img style={{ height: '100%', width: '100%' }} src={icon2} /> 
                                         <span className="text-uppercase font-weight-bold position-absolute" style={{fontSize:100, color:'white'}}>{value.electionname}</span>
                                     </div>
                                     <div className="d-flex justify-content-around align-items-center flex-row p-4" style={{ width: '100%', height: '30%' }}>
-                                        <div type="button" onClick={()=> this.state.show == true ? this.handleClick(value.electionname): alert("already voted")} className="d-flex justify-content-center align-items-center" style={{height:'80px',width:'60%',backgroundColor:'#05c555',margin:30,borderRadius:7}}>
+                                        <div type="button" onClick={()=> this.state.show == true ? this.handleClick(value.electionname): alert("already voted")} className="d-flex justify-content-center align-items-center" style={{height:'80px',width:'30%',backgroundColor:'blue',margin:30,borderRadius:10}}>
                                             <span style={{fontSize:27,fontWeight:'bold',color:'white'}}>Vote</span>
                                         </div>
-                                        <div type="button" className="d-flex justify-content-center align-items-center" onClick={() => this.result(value.electionname)} style={{height:'80px',width:'60%',backgroundColor:'#05c555',margin:30,borderRadius:7}}>
+                                        <div type="button" className="d-flex justify-content-center align-items-center" onClick={() => this.result(value.electionname)} style={{height:'80px',width:'30%',backgroundColor:'blue',margin:30,borderRadius:10}}>
                                             <span style={{fontSize:27,fontWeight:'bold',color:'white'}}>Result</span>
                                         </div>
                                     </div>
@@ -198,7 +186,6 @@ class VoterHome extends React.Component {
                             )
                         })
                     }
-                    </div>
                 </div>
             </div>
         )

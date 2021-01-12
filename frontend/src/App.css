@@ -8,3 +8,6 @@
   scroll-snap-type: y mandatory;
   z-index: -1
 }
+#img1{
+  filter: blur(4px);
+}

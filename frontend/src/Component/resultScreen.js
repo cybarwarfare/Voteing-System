@@ -64,7 +64,7 @@ class resultScreen extends React.Component {
         console.log("render data :" + JSON.stringify(this.state.Member))
         return (
             <div className="d-flex flex-column" style={{ height: '100vh', width: '100vw', backgroundColor: 'white' }}>
-            <div className="bg-primary w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh' }}>
+            <div className=" w-100 d-flex flex-row justify-content-center align-items-center pl-2" style={{ height: '25vh',backgroundColor:'#05c555' }}>
                 {/* <div style={{ height: '20vh', width: '20vh' }}>
                     <img className="p-3" style={{ height: '100%', width: '100%' }} alt="" src={Logo} />
                 </div> */}
@@ -102,9 +102,9 @@ class resultScreen extends React.Component {
                         {
                             this.state.Secretary.map((value, index) => {
                                 return (
-                                    <div className="p-0">
-                                        <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
-                                            <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '2em' }}>{value.name}({value.party}) : {value.vote}</span>
+                                    <div className="p-0" key="index">
+                                        <div className="d-flex justify-content-center align-items-center container-fluid" style={{width:240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
+                                            <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '1em' }}>{value.name}({value.party}) : {value.vote}</span>
                                         </div>
                                     </div>
                                 )
@@ -117,9 +117,9 @@ class resultScreen extends React.Component {
                         {
                             this.state.Treasury.map((value, index) => {
                                 return (
-                                    <div className="p-0">
-                                        <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
-                                            <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '2em' }}>{value.name}({value.party}) : {value.vote}</span>
+                                    <div className="p-0" key="index">
+                                        <div className="d-flex justify-content-center align-items-center container-fluid" style={{width:240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
+                                            <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '1em' }}>{value.name}({value.party}) : {value.vote}</span>
                                         </div>
                                     </div>
                                 )
@@ -132,9 +132,9 @@ class resultScreen extends React.Component {
                         {
                             this.state.Member.map((value, index) => {
                                 return (
-                                    <div className="p-0">
-                                        <div className="d-flex justify-content-center align-items-center container-fluid" style={{ width: 240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
-                                            <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '2em' }}>{value.name}({value.party}) : {value.vote}</span>
+                                    <div className="p-0" key="index">
+                                        <div className="d-flex justify-content-center align-items-center container-fluid" style={{width:240, height: 80, backgroundColor: value.party == 'sfi' ? "#ff8080" : value.party == '#99bbff' ? 'blue' : value.party == 'nda' ? '#ffff99' : '#99ff99' }}>
+                                            <span className="text-uppercase" style={{ color: 'black', fontWeight: 'bold', fontSize: '1em' }}>{value.name}({value.party}) : {value.vote}</span>
                                         </div>
                                     </div>
                                 )
