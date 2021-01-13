@@ -46,14 +46,14 @@ loginFunction = () =>{
         <Form autoComplete="off" className="d-flex justify-content-center align-items-center flex-column">
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control style={{width:'270px'}} value={this.state.email} onChange={e => this.setState({ email: e.target.value })}  type="email" placeholder="Enter email" />
+            <Form.Control style={{width:'270px'}} autocomplete="off" value={this.state.email} onChange={e => this.setState({ email: e.target.value })}  type="email" placeholder="Enter email" />
             <Form.Text className="text-muted">
               We'll never share your email with anyone else.
             </Form.Text>
           </Form.Group>
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
-            <Form.Control  className="mb-4" style={{width:'270px'}} value={this.state.password} onChange={e => this.setState({ password: e.target.value })} type="password" placeholder="Password" />
+            <Form.Control  className="mb-4" autocomplete="off" style={{width:'270px'}} value={this.state.password} onChange={e => this.setState({ password: e.target.value })} type="password" placeholder="Password" />
           </Form.Group>
           <Button ariant="success" style={{backgroundColor:'#05c555',width:270,fontWeight:'bold'}} onClick={() =>this.HandleLogin()}>LOGIN</Button>
           <div className="mt-4" type="button">

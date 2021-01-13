@@ -66,17 +66,17 @@ class VoterSign extends React.Component {
                         <div className="d-flex flex-row">
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control style={{ width: '270px' }} type="email" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} placeholder="Enter Name" />
+                            <Form.Control style={{ width: '20vw' }} type="email" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} placeholder="Enter Name" />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Email ID</Form.Label>
-                            <Form.Control className="mb-1" style={{ width: '270px',marginLeft:30 }} type="text" value={this.state.email} onChange={e => this.setState({ email: e.target.value })} placeholder="Enter Email id" />
+                            <Form.Control className="mb-1" style={{ width: '20vw',marginLeft:30 }} type="text" value={this.state.email} onChange={e => this.setState({ email: e.target.value })} placeholder="Enter Email id" />
                         </Form.Group>
                         </div>
                         <Form.Label>Date Of Birth</Form.Label>
                         <Form.Row className="mb-4">
                             <Col>
-                            <Form.Control as="select" style={{width:180}}  onChange={e => this.setState({ day: e.target.value })}>
+                            <Form.Control as="select" style={{width:'14vw'}}  onChange={e => this.setState({ day: e.target.value })}>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -111,7 +111,7 @@ class VoterSign extends React.Component {
                             </Form.Control>
                             </Col>
                             <Col>
-                            <Form.Control as="select" style={{width:180}} onChange={e => this.setState({ month: e.target.value })}>
+                            <Form.Control as="select" style={{width:'14vw'}} onChange={e => this.setState({ month: e.target.value })}>
                                 <option value="JAN">JAN</option>
                                 <option value="FAB">FAB</option>
                                 <option value="MAR">MAR</option>
@@ -127,7 +127,7 @@ class VoterSign extends React.Component {
                             </Form.Control>
                             </Col>
                             <Col>
-                            <Form.Control as="select" style={{width:180}} onChange={e => this.setState({ year: e.target.value })}>
+                            <Form.Control as="select" style={{width:'14vw'}} onChange={e => this.setState({ year: e.target.value })}>
                                 <option value="1996">1996</option>
                                 <option value="1997">1997</option>
                                 <option value="1998">1998</option>
@@ -141,14 +141,14 @@ class VoterSign extends React.Component {
                         <div className="d-flex flex-row">
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control className="mb-1" style={{ width: '270px' }} type="password" value={this.state.password} onChange={e => this.setState({ password: e.target.value })} placeholder="Enter Password" />
+                            <Form.Control className="mb-1" style={{ width: '20vw' }} type="password" value={this.state.password} onChange={e => this.setState({ password: e.target.value })} placeholder="Enter Password" />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Conform Password</Form.Label>
-                            <Form.Control style={{ width: '270px',marginLeft:30 }} type="password" value={this.state.confirmPassword} onChange={e => this.setState({ confirmPassword: e.target.value })} placeholder="Enter Conform Password" />
+                            <Form.Control style={{ width: '20vw',marginLeft:30 }} type="password" value={this.state.confirmPassword} onChange={e => this.setState({ confirmPassword: e.target.value })} placeholder="Enter Conform Password" />
                         </Form.Group>
                         </div>
-                        <Button variant="success" style={{ width: '270px',marginTop:30,fontWeight:'bold',backgroundColor:'#05c555'}} onClick={() => this.onSubmit()}>SIGN UP</Button>
+                        <Button variant="success" style={{ width: '20vw',marginTop:30,fontWeight:'bold',backgroundColor:'#05c555'}} onClick={() => this.onSubmit()}>SIGN UP</Button>
                     </Form>
                 </div>
                 <div className="d-flex col-6 justify-content-center align-items-center" style={{backgroundColor:'#eff6fe'}}>
