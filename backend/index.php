@@ -255,14 +255,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
             $db = Flight::db();
             try{
                 // check login
-                $sql = "DELETE FROM election WHERE electionname =:electionname";
+
+                $sql = "DELETE FROM candidates WHERE electionname =:electionname";
                 $stmt= $db->prepare($sql);
                 $stmt ->bindParam(':electionname',$electionname);
                 $stmt->execute();
                 $result = $stmt->errorInfo();
                 Flight::json(array('status' => true,'data :' => $result));
-
-                $sql = "DELETE FROM candidates WHERE electionname =:electionname";
+                
+                $sql = "DELETE FROM election WHERE electionname =:electionname";
                 $stmt= $db->prepare($sql);
                 $stmt ->bindParam(':electionname',$electionname);
                 $stmt->execute();
@@ -276,6 +277,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
                 $result = $stmt->errorInfo();
                 Flight::json(array('status' => true,'data :' => $result));
                 Flight::json("finished");
+
+            } catch(PDOException $e){
+                // error
+                Flight::json(array('status' => false,'reason' =>"error :". $e->getMessage()));
+            }
+        }
+        public static function deleteCandidate(){
+            $name = Flight::request()->data->name;
+            $party = Flight::request()->data->party;
+            $db = Flight::db();
+            try{
+                // check login
+                $sql = "DELETE FROM candidates WHERE name =:name && party =:party";
+                $stmt= $db->prepare($sql);
+                $stmt ->bindParam(':name',$name);
+                $stmt ->bindParam(':party',$party);
+                $stmt->execute();
+                $result = $stmt->errorInfo();
+                Flight::json(array('status' => true,'data :' => $result));
             } catch(PDOException $e){
                 // error
                 Flight::json(array('status' => false,'reason' =>"error :". $e->getMessage()));
@@ -296,6 +316,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     Flight::route('POST /markVote', array('Booth','markVote'));//complete Vote
     Flight::route('POST /checkVote', array('Booth','checkVote'));//check Vote
     Flight::route('POST /deleteElection', array('Booth','deleteElection'));//delete Election
+    Flight::route('POST /deleteCandidate', array('Booth','deleteCandidate'));//delete Election
     Flight::route('POST /adminData', array('Booth','adminData'));//admin data
 
     Flight::start();
